@@ -113,7 +113,7 @@
                     // Update status and colors
                     card.classList.remove('border-success', 'border-warning', 'border-danger');
                     cardHeader.classList.remove('bg-success', 'bg-warning', 'bg-danger', 'text-white', 'text-dark');
-                    levelElement.parentElement.remove('text-success', 'text-warning', 'text-danger');
+                    levelElement.parentElement.classList.remove('text-success', 'text-warning', 'text-danger');
                     statusBadge.classList.remove('bg-light', 'text-success', 'text-warning', 'text-danger');
                     statusBadge.classList.add('bg-light'); // Always light background for badge text
 
