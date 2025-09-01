@@ -181,12 +181,20 @@
                         waterLevelHeader.classList.add('text-bg-danger');
                         levelElement.parentElement.classList.add('text-danger');
                         statusBadge.classList.add('text-bg-danger');
+                        
+                        new Notification(document.title, { 
+                            body: `Dangerous: The water level of ${resp[0]["river_name"]} is now at ${currentLevel}m!`
+                        });
                     } else if (currentLevel >= alertThreshold) {
                         statusBadge.textContent = 'Alert Level';
                         waterLevelCard.classList.add('border-warning');
                         waterLevelHeader.classList.add('text-bg-warning');
                         levelElement.parentElement.classList.add('text-warning');
                         statusBadge.classList.add('text-bg-warning');
+                        
+                        new Notification(document.title, { 
+                            body: `Warning: The water level of ${resp[0]["river_name"]} is now at ${currentLevel}m.`
+                        });
                     } else {
                         statusBadge.textContent = 'Normal Level';
                         waterLevelCard.classList.add('border-success');
@@ -280,10 +288,24 @@
                     });
                 });
             }
+            
+            function askNotificationPermission() {
+                // Check if the browser supports notifications
+                if (!("Notification" in window)) {
+                    console.log("This browser does not support notifications.");
+                    return;
+                }
+                Notification.requestPermission().then((permission) => {
+                    if(permission === "granted") {
+                        new Notification(document.title, { body: "A greeting notification!" });
+                    }
+                });
+            }
 
             updateRiverData();
             setInterval(() => updateRiverData(), 10_000);
             loadWaterLevelChart();
+            askNotificationPermission();
         })();
     </script>
 </body>
