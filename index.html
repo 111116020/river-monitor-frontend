@@ -160,6 +160,7 @@
                             );
                         }
                         ctx.closePath();
+                        ctx.stroke();
                         ctx.fill();
                     };
                     realtimeImage.src = `/api/image/${resp[0]["timestamp"]}`;
