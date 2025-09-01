@@ -63,8 +63,7 @@
                 <p class="card-text text-muted mb-2">Current Water Level</p>
                 <h1 class="card-title-level text-success mb-3"><span id="waterLevel"></span> m</h1>
 
-                <img id="realtimeImage" style="object-fit: contain" class="w-100 mt-4">
-
+                <canvas id="realtimeImageCanvas" class="w-100 mt-4 graph-placeholder"></canvas>
 
                 <div class="row w-100 mt-4">
                     <div class="col-md-6">
@@ -93,7 +92,6 @@
             const levelElement = document.getElementById('waterLevel');
             const statusBadge = card.querySelector('.status-badge-large');
             const cardHeader = card.querySelector('.card-header');
-            const realtimeImage = document.getElementById("realtimeImage");
             const riverNameTitle = document.getElementById("riverNameTitle");
                 
             function updateRiverData() {
@@ -108,7 +106,6 @@
 
                     riverNameTitle.textContent = resp[0]["river_name"];
                     levelElement.textContent = currentLevel.toFixed(2);
-                    realtimeImage.setAttribute("src", `/api/image/${resp[0]["timestamp"]}`);
 
                     // Update status and colors
                     card.classList.remove('border-success', 'border-warning', 'border-danger');
@@ -136,6 +133,35 @@
                         levelElement.parentElement.classList.add('text-success');
                         statusBadge.classList.add('text-success');
                     }
+
+                    // Load and draw the realtime image onto the canvas
+                    let realtimeImage = new Image();
+                    realtimeImage.onload = function() {
+                        let realtimeImageCanvas = document.getElementById("realtimeImageCanvas");
+                        realtimeImageCanvas.height = realtimeImageCanvas.clientHeight;
+                        realtimeImageCanvas.width = realtimeImageCanvas.clientWidth;
+                        let ctx = realtimeImageCanvas.getContext("2d");
+                        ctx.width = realtimeImage.width;
+                        ctx.height = realtimeImage.height;
+                        console.log(realtimeImage.width);
+                        ctx.drawImage(realtimeImage, 0, 0, realtimeImage.width, realtimeImage.height, 0, 0, realtimeImageCanvas.width, realtimeImageCanvas.height);
+                        
+                        ctx.setFillColor(0, 0, 255, 0.2);
+                        ctx.beginPath();
+                        ctx.moveTo(
+                            resp[0]["points"][0][0] * realtimeImageCanvas.width, 
+                            resp[0]["points"][0][1] * realtimeImageCanvas.height
+                        );
+                        for(let point of resp[0]["points"]) {
+                            ctx.lineTo(
+                                point[0] * realtimeImageCanvas.width, 
+                                point[1] * realtimeImageCanvas.height
+                            );
+                        }
+                        ctx.closePath();
+                        ctx.fill();
+                    };
+                    realtimeImage.src = `/api/image/${resp[0]["timestamp"]}`;
                 });
             }
 
