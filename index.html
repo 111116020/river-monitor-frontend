@@ -143,10 +143,10 @@
                         let ctx = realtimeImageCanvas.getContext("2d");
                         ctx.width = realtimeImage.width;
                         ctx.height = realtimeImage.height;
-                        console.log(realtimeImage.width);
                         ctx.drawImage(realtimeImage, 0, 0, realtimeImage.width, realtimeImage.height, 0, 0, realtimeImageCanvas.width, realtimeImageCanvas.height);
                         
                         ctx.fillStyle = "rgba(0, 0, 255, 0.2)";
+                        ctx.strokeStyle = "rgba(0, 0, 255, 0.8)";
                         ctx.beginPath();
                         ctx.moveTo(
                             resp[0]["points"][0][0] * realtimeImageCanvas.width, 
