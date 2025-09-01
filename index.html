@@ -165,19 +165,19 @@
                         waterLevelCard.classList.add('border-danger');
                         waterLevelHeader.classList.add('text-bg-danger');
                         levelElement.parentElement.classList.add('text-danger');
-                        statusBadge.classList.add('text-danger');
+                        statusBadge.classList.add('text-bg-danger');
                     } else if (currentLevel >= alertThreshold) {
                         statusBadge.textContent = 'Alert Level';
                         waterLevelCard.classList.add('border-warning');
                         waterLevelHeader.classList.add('text-bg-warning');
                         levelElement.parentElement.classList.add('text-warning');
-                        statusBadge.classList.add('text-warning');
+                        statusBadge.classList.add('text-bg-warning');
                     } else {
                         statusBadge.textContent = 'Normal Level';
                         waterLevelCard.classList.add('border-success');
                         waterLevelHeader.classList.add('text-bg-success');
                         levelElement.parentElement.classList.add('text-success');
-                        statusBadge.classList.add('text-success');
+                        statusBadge.classList.add('text-bg-success');
                     }
 
                     // Load and draw the realtime image onto the canvas
