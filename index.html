@@ -113,7 +113,7 @@
                     // Update status and colors
                     card.classList.remove('border-success', 'border-warning', 'border-danger');
                     cardHeader.classList.remove('bg-success', 'bg-warning', 'bg-danger', 'text-white', 'text-dark');
-                    levelElement.classList.remove('text-success', 'text-warning', 'text-danger');
+                    levelElement.parentElement.remove('text-success', 'text-warning', 'text-danger');
                     statusBadge.classList.remove('bg-light', 'text-success', 'text-warning', 'text-danger');
                     statusBadge.classList.add('bg-light'); // Always light background for badge text
 
@@ -121,19 +121,19 @@
                         statusBadge.textContent = 'Flood Level';
                         card.classList.add('border-danger');
                         cardHeader.classList.add('bg-danger', 'text-white');
-                        levelElement.classList.add('text-danger');
+                        levelElement.parentElement.classList.add('text-danger');
                         statusBadge.classList.add('text-danger');
                     } else if (currentLevel >= alertThreshold) {
                         statusBadge.textContent = 'Alert Level';
                         card.classList.add('border-warning');
                         cardHeader.classList.add('bg-warning', 'text-dark');
-                        levelElement.classList.add('text-warning');
+                        levelElement.parentElement.classList.add('text-warning');
                         statusBadge.classList.add('text-warning');
                     } else {
                         statusBadge.textContent = 'Normal Level';
                         card.classList.add('border-success');
                         cardHeader.classList.add('bg-success', 'text-white');
-                        levelElement.classList.add('text-success');
+                        levelElement.parentElement.classList.add('text-success');
                         statusBadge.classList.add('text-success');
                     }
                 });
