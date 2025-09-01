@@ -46,8 +46,8 @@
             transition: transform 0.2s, box-shadow 0.2s;
         }
         .card:hover {
-            transform: scale(1.01);
-            box-shadow: rgba(0, 0, 0, .1) 0 0 8px 8px;
+            transform: scale(1.02);
+            box-shadow: rgba(0, 0, 0, .2) 0 0 8px 8px;
             z-index: 2;
         }
     </style>
@@ -72,6 +72,7 @@
                         </div>
                         <div class="card-body text-center">
                             <h3 id="riverName" class="mb-2">Unknown River</h3>
+                            <p class="card-text">Last updated at: <span id="lastUpdateTime"></span></p>
                             <hr>
                             <div class="row">
                                 <div class="col-6">
@@ -154,6 +155,7 @@
             const riverNameTitle = document.getElementById("riverName");
             const riverCountry = document.getElementById("riverCountry");
             const riverBasin = document.getElementById("riverBasin");
+            const lastUpdateTime = document.getElementById("lastUpdateTime");
 
             function updateRiverData() {
                 fetch("/api/retrieve", {
@@ -169,6 +171,7 @@
                     riverCountry.textContent = resp[0]["country_name"] || "N/A";
                     riverBasin.textContent = resp[0]["basin_name"] || "N/A";
                     levelElement.textContent = currentLevel.toFixed(2);
+                    lastUpdateTime.textContent = (new Date(resp[0]["timestamp"] * 1000)).toLocaleString();
 
                     waterLevelCard.classList.remove('border-success', 'border-warning', 'border-danger');
                     waterLevelHeader.classList.remove('text-bg-success', 'text-bg-warning', 'text-bg-danger');
