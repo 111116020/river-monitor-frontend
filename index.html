@@ -216,10 +216,10 @@
                         ctx.lineWidth = 3;
                         ctx.beginPath();
                         ctx.moveTo(
-                            resp["points"][0][0] * realtimeImageCanvas.width,
-                            resp["points"][0][1] * realtimeImageCanvas.height
+                            resp.model_points[0][0] * realtimeImageCanvas.width,
+                            resp.model_points[0][1] * realtimeImageCanvas.height
                         );
-                        for(let point of resp["points"]) {
+                        for(let point of resp.model_points) {
                             ctx.lineTo(
                                 point[0] * realtimeImageCanvas.width,
                                 point[1] * realtimeImageCanvas.height
