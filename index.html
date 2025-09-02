@@ -158,20 +158,14 @@
             const lastUpdateTime = document.getElementById("lastUpdateTime");
 
             function updateRiverData() {
-                fetch("/api/retrieve", {
-                    "method": "POST",
-                    "headers": {
-                        "Content-Type": "application/json",
-                    },
-                    "body": JSON.stringify({})
-                }).then(resp => resp.json()).then(resp => {
-                    currentLevel = resp[0]["est_level"];
+                fetch("/api/retrieve/latest").then(resp => resp.json()).then(resp => {
+                    currentLevel = resp["est_level"];
 
-                    riverNameTitle.textContent = resp[0]["river_name"];
-                    riverCountry.textContent = resp[0]["country_name"] || "N/A";
-                    riverBasin.textContent = resp[0]["basin_name"] || "N/A";
+                    riverNameTitle.textContent = resp["river_name"];
+                    riverCountry.textContent = resp["country_name"] || "N/A";
+                    riverBasin.textContent = resp["basin_name"] || "N/A";
                     levelElement.textContent = currentLevel.toFixed(2);
-                    lastUpdateTime.textContent = (new Date(resp[0]["timestamp"] * 1000)).toLocaleString();
+                    lastUpdateTime.textContent = (new Date(resp["timestamp"] * 1000)).toLocaleString();
 
                     waterLevelCard.classList.remove('border-success', 'border-warning', 'border-danger');
                     waterLevelHeader.classList.remove('text-bg-success', 'text-bg-warning', 'text-bg-danger');
@@ -186,7 +180,7 @@
                         statusBadge.classList.add('text-bg-danger');
                         
                         new Notification(document.title, { 
-                            body: `Dangerous: The water level of ${resp[0]["river_name"]} is now at ${currentLevel}m!`
+                            body: `Dangerous: The water level of ${resp["river_name"]} is now at ${currentLevel}m!`
                         });
                     } else if (currentLevel >= alertThreshold) {
                         statusBadge.textContent = 'Alert Level';
@@ -196,7 +190,7 @@
                         statusBadge.classList.add('text-bg-warning');
                         
                         new Notification(document.title, { 
-                            body: `Warning: The water level of ${resp[0]["river_name"]} is now at ${currentLevel}m.`
+                            body: `Warning: The water level of ${resp["river_name"]} is now at ${currentLevel}m.`
                         });
                     } else {
                         statusBadge.textContent = 'Normal Level';
@@ -222,10 +216,10 @@
                         ctx.lineWidth = 3;
                         ctx.beginPath();
                         ctx.moveTo(
-                            resp[0]["points"][0][0] * realtimeImageCanvas.width,
-                            resp[0]["points"][0][1] * realtimeImageCanvas.height
+                            resp["points"][0][0] * realtimeImageCanvas.width,
+                            resp["points"][0][1] * realtimeImageCanvas.height
                         );
-                        for(let point of resp[0]["points"]) {
+                        for(let point of resp["points"]) {
                             ctx.lineTo(
                                 point[0] * realtimeImageCanvas.width,
                                 point[1] * realtimeImageCanvas.height
@@ -235,7 +229,7 @@
                         ctx.stroke();
                         ctx.fill();
                     };
-                    realtimeImage.src = `/api/image/${resp[0]["timestamp"]}`;
+                    realtimeImage.src = `/api/image/${resp["timestamp"]}`;
                 });
             }
 
