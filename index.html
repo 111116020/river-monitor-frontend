@@ -144,6 +144,8 @@
         let floodThreshold = 4.0;
 
         (() => {
+            let notifiedTimestamp = 0;
+
             document.getElementById('alertThreshold').textContent = alertThreshold;
             document.getElementById('floodThreshold').textContent = floodThreshold;
 
@@ -179,9 +181,12 @@
                         levelElement.parentElement.classList.add('text-danger');
                         statusBadge.classList.add('text-bg-danger');
                         
-                        new Notification(document.title, { 
-                            body: `Dangerous: The water level of ${resp["river_name"]} is now at ${currentLevel}m!`
-                        });
+                        if(notifiedTimestamp !== resp["timestamp"]) {
+                            notifiedTimestamp = resp["timestamp"];
+                            new Notification(document.title, { 
+                                body: `Dangerous: The water level of ${resp["river_name"]} is now at ${currentLevel}m!`
+                            });
+                        }
                     } else if (currentLevel >= alertThreshold) {
                         statusBadge.textContent = 'Alert Level';
                         waterLevelCard.classList.add('border-warning');
@@ -189,9 +194,12 @@
                         levelElement.parentElement.classList.add('text-warning');
                         statusBadge.classList.add('text-bg-warning');
                         
-                        new Notification(document.title, { 
-                            body: `Warning: The water level of ${resp["river_name"]} is now at ${currentLevel}m.`
-                        });
+                        if(notifiedTimestamp !== resp["timestamp"]) {
+                            notifiedTimestamp = resp["timestamp"];
+                            new Notification(document.title, { 
+                                body: `Warning: The water level of ${resp["river_name"]} is now at ${currentLevel}m.`
+                            });
+                        }
                     } else {
                         statusBadge.textContent = 'Normal Level';
                         waterLevelCard.classList.add('border-success');
